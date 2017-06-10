@@ -1,7 +1,15 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
-
+/**
+You can think of Observable.of(1, 2, 3).forEach(doSomething) as being semantically equivalent to:
+new Promise((resolve, reject) => {
+  Observable.of(1, 2, 3).subscribe(
+    doSomething,
+    reject,
+    resolve);
+});
+**/
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
