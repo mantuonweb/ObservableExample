@@ -33,7 +33,10 @@ export class AppComponent {
           setTimeout(() => {
               observer.next(43);
           }, 2000);
-          
+          setTimeout(() => {
+              observer.error(new Error('Something bad happened!'));
+          }, 2000);
+           
           setTimeout(() => {
               observer.complete();
           }, 3000);
@@ -48,7 +51,10 @@ export class AppComponent {
           	this.values.push(value);
           	return this.values;
           },
-          error => this.anyErrors = true,
+          (error) => {
+          	console.log('error',error);
+          	return this.anyErrors = true
+          },
           () => {
           	return this.finished = true;
           }
