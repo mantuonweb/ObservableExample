@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component,ChangeDetectorRef} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
 
 /**
 You can think of Observable.of(1, 2, 3).forEach(doSomething) as being semantically equivalent to:
@@ -20,8 +22,18 @@ export class AppComponent {
   private values: Array<number> = [23];
   private anyErrors: boolean;
   private finished: boolean;
+  public doctors = [];
 
-  constructor() {
+  constructor( http: Http,cd: ChangeDetectorRef) {
+  	 http.get('http://jsonplaceholder.typicode.com/users/')
+        .flatMap((data:any) => data.json())
+        .filter((person:any) => person.id > 5)
+        .map((person) => "Dr. " + person.name)
+        .subscribe((data) => {
+          this.doctors.push(data);
+          
+          cd.detectChanges();
+        });
   }
   
   init() {
